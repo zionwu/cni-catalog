@@ -5,6 +5,10 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/ljchen/rancher-cni-driver:v0.2
     command: /bin/sh -c "while true; do modprobe ebtables; echo -e 'CNI_CATTLE_IPADDR='$CNI_CATTLE_IPADDR > /opt/cni/conf; sleep 60; done"
     network_mode: host
+    volumes:
+    - /lib/modules:/lib/modules
+    - /dev:/dev
+    - /var/hfbank:/opt/cni/hfbank
     pid: host
     labels:
       io.rancher.scheduler.global: 'true'

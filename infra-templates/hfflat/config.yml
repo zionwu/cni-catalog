@@ -1,0 +1,8 @@
+name: HFB Rancher Flat Networking
+description: |
+  HFB Rancher Networking plugin using Flat Networking.
+version: v0.0.1
+category: Networking
+labels:
+  io.rancher.certified: rancher
+  io.rancher.orchestration.supported: 'cattle'

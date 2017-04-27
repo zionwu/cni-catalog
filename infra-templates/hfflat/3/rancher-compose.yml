@@ -40,8 +40,8 @@
     label: "Subnet PrefixSize for IPAM"
     description: "Subnet PrefixSize for IPAM"
     required: true
-    default: 24
-    type: string
+    default: "24"
+    type: "string"
   - variable: "RESERVED_IP"
     label: "reservedIP"
     description: "reserved IP for veth"

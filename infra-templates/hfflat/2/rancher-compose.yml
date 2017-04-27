@@ -1,0 +1,84 @@
+.catalog:
+  name: "HFBank Flat Network"
+  version: "0.0.3"
+  questions:
+  - variable: CNI_CATTLE_IPADDR
+    label: Cattle IP address
+    type: string
+    description: Cattle IP address.
+  - variable: "SUBNET"
+    label: "Subnet"
+    description: "The subnet to use for the managed network."
+    type: "string"
+    default: '172.22.101.0/24'
+    required: true
+  - variable: "START_ADDRESS"
+    label: "Start IP Address"
+    description: "The subnet to use for the managed network."
+    type: "string"
+    default: '172.22.101.110'
+    required: true
+  - variable: "END_ADDRESS"
+    label: "END IP Address"
+    description: "The subnet to use for the managed network."
+    type: "string"
+    default: '172.22.101.240'
+    required: true
+  - variable: "GATEWAY"
+    label: "Gateway"
+    description: "Container default gateway."
+    type: "string"
+    default: '172.22.101.1'
+    required: true
+  - variable: "CIDR_SIZE"
+    label: "Subnet PrefixSize for IPAM"
+    description: "Subnet PrefixSize for IPAM"
+    required: true
+    default: 24
+    type: int
+  - variable: "RESERVED_IP"
+    label: "reservedIP"
+    description: "reserved IP for veth"
+    type: "string"
+    default: '172.22.101.1'
+    required: true
+  - variable: "RANCHER_DEBUG"
+    label: "Enable Debug Logs"
+    description: "This will enable very verbose debug logs."
+    type: "boolean"
+    default: "true"
+    required: true
+
+
+hfflat:
+  network_driver:
+    name: HFBank Flat Network
+    default_network:
+      name: hfflat
+      host_ports: true
+      subnets:
+      - network_address: $SUBNET
+        cidr_size: $CIDR_SIZE
+        start_address: $START_ADDRESS
+        end_address: $END_ADDRESS
+      dns:
+      - 169.254.169.250
+      dns_search:
+      - rancher.internal
+    cni_config:
+      '11-rancher.conf':
+        name: rancher-cni-network
+        type: rancher-cni-bridge
+        bridge: cni0
+        bridgeSubnet: $SUBNET
+        isDefaultGateway: true
+        hostNat: false
+        hairpinMode: true
+        linkMTUOverhead: 98
+        ipam:
+          type: rancher-cni-ipam
+          logToFile: /var/log/rancher-ipam.log
+          gateway: $GATEWAY
+          subnetPrefixSize: $CIDR_SIZE
+          routes:
+          - {dst: 169.254.169.250/32, gw: $RESERVED_IP}

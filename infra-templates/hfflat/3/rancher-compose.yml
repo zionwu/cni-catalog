@@ -40,7 +40,7 @@
     label: "Subnet PrefixSize for IPAM"
     description: "Subnet PrefixSize for IPAM"
     required: true
-    default: "24"
+    default: "/24"
     type: "string"
   - variable: "RESERVED_IP"
     label: "reservedIP"

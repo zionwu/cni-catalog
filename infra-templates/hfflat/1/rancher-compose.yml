@@ -1,6 +1,6 @@
 .catalog:
   name: "HFBank Flat Network"
-  version: "0.0.1"
+  version: "0.0.2"
   questions:
   - variable: CNI_CATTLE_IPADDR
     label: Cattle IP address
